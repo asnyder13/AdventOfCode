@@ -8,7 +8,7 @@ class Seat
 	  north: [-1,  0].freeze, north_east: [-1,  1].freeze,
 	  east:  [ 0,  1].freeze, south_east: [ 1,  1].freeze,
 	  south: [ 1,  0].freeze, south_west: [ 1, -1].freeze,
-	  west:  [ 0, -1].freeze, north_west: [-1, -1].freeze,
+	  west:  [ 0, -1].freeze, north_west: [-1, -1].freeze
 	}.freeze
 
 	NEIGHBOUR_DIRECTIONS = RELATIVE_NEIGHBOUR_COORDINATES.keys.freeze
@@ -60,7 +60,6 @@ class Seat
 		val = floor? ? nil : alive?
 		Floorplan::MAPPING.key(val)
 	end
-
 end
 
 class Floorplan
@@ -107,7 +106,7 @@ class Floorplan
 		@floor.map { |s| s.map(&:to_s).join }.join("\n")
 	end
 
-	private
+		private
 
 	def add_rows(lines)
 		lines.each { |l| add_row(l) }
@@ -117,13 +116,8 @@ class Floorplan
 		line.chomp!
 		@floor << line.each_char.map { |s| MAPPING[s] }.map { |m| Seat.new(m) }
 	end
-
 end
 
 floorplan = Floorplan.new(lines)
-
-while floorplan.changing?
-	floorplan.step
-end
-
+floorplan.step while floorplan.changing?
 puts floorplan.occupied

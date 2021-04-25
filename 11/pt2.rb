@@ -8,7 +8,7 @@ class Seat
 	  north: [-1,  0].freeze, north_east: [-1,  1].freeze,
 	  east:  [ 0,  1].freeze, south_east: [ 1,  1].freeze,
 	  south: [ 1,  0].freeze, south_west: [ 1, -1].freeze,
-	  west:  [ 0, -1].freeze, north_west: [-1, -1].freeze,
+	  west:  [ 0, -1].freeze, north_west: [-1, -1].freeze
 	}.freeze
 
 	NEIGHBOUR_DIRECTIONS = RELATIVE_NEIGHBOUR_COORDINATES.keys.freeze
@@ -35,41 +35,6 @@ class Seat
 		send("#{direction}=", neighbour)
 	end
 
-	def neighbours
-		NEIGHBOUR_DIRECTIONS.map(&method(:[])).compact
-	end
-
-	def dir_with_neightbours
-		NEIGHBOUR_DIRECTIONS.map { |dir| [dir, self[dir]] }
-	end
-
-	def neighbours_by_sight
-		dir_neigh = dir_with_neightbours.filter { !_2.nil? }
-		until dir_neigh.reject { _2.nil? || _2.seat_taken? || _2.seat_free? }.length == 0
-			dir_neigh.map! do |dir, n|
-				if !n.nil? && !n.seat_taken? && !n.seat_free?
-					[dir, n[dir]]
-				else
-					[dir, n]
-				end
-			end
-		end
-
-		return dir_neigh.map { _2 }
-	end
-
-	def taken_next?
-		taken_neighbours = neighbours_by_sight.compact.count(&:seat_taken?)
-
-		if floor? then false
-		elsif seat_taken? then taken_neighbours < 5
-		else taken_neighbours.zero?
-		end
-	end
-
-	def templul(taken_neighbours)
-	end
-
 	def queue_next_state
 		@next_state = taken_next?
 		@changed = seat_taken? != @next_state
@@ -84,6 +49,45 @@ class Seat
 		Floorplan::MAPPING.key(val)
 	end
 
+		private
+
+	def neighbours
+		NEIGHBOUR_DIRECTIONS.map(&method(:[])).compact
+	end
+
+	def dir_with_neightbours
+		NEIGHBOUR_DIRECTIONS.map { |dir| [dir, self[dir]] }
+	end
+
+	def neighbours_by_sight
+		dir_neigh = dir_with_neightbours.filter { !_2.nil? }
+		at_edges = false
+		until at_edges
+			follow_directions(dir_neigh)
+			at_edges = dir_neigh.reject { _2.nil? || _2.seat_taken? || _2.seat_free? }.empty?
+		end
+
+		return dir_neigh.map { _2 }
+	end
+
+	def follow_directions(dir_neigh)
+		dir_neigh.map! do |dir, n|
+			if !n.nil? && !n.seat_taken? && !n.seat_free?
+				[dir, n[dir]]
+			else
+				[dir, n]
+			end
+		end
+	end
+
+	def taken_next?
+		taken_neighbours = neighbours_by_sight.compact.count(&:seat_taken?)
+
+		if floor? then false
+		elsif seat_taken? then taken_neighbours < 5
+		else taken_neighbours.zero?
+		end
+	end
 end
 
 class Floorplan
@@ -140,14 +144,8 @@ class Floorplan
 		line.chomp!
 		@floor << line.each_char.map { |s| MAPPING[s] }.map { |m| Seat.new(m) }
 	end
-
 end
 
 floorplan = Floorplan.new(lines)
-
-found = {}
-while floorplan.changing?
-	floorplan.step
-end
-
+floorplan.step while floorplan.changing?
 puts floorplan.occupied
