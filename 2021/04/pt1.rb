@@ -14,7 +14,7 @@ class BingoBoard
 		@rows = []
 		@count_row = Hash.new { |h, k| h[k] = 0 }
 		@count_col = Hash.new { |h, k| h[k] = 0 }
-		@marked    = Hash.new { |h, k| h[k] = false }
+		@marked    = []
 	end
 
 	def empty? = rows.empty?
@@ -28,7 +28,7 @@ class BingoBoard
 		row_idx = rows.index row
 		col_idx = row.index num
 
-		marked[[row_idx, col_idx]] = true
+		marked << num
 		count_row[row_idx] += 1
 		count_col[col_idx] += 1
 	end
@@ -37,15 +37,7 @@ class BingoBoard
 		(count_row.values.include?(size) && :row) || (count_col.values.include?(size) && :col)
 	end
 
-	def unmarked
-		result = []
-		rows.each.with_index do |row, ir|
-			row.each.with_index do |num, ic|
-				result << num unless @marked.key? [ir, ic]
-			end
-		end
-		result
-	end
+	def unmarked = rows.flatten.difference(marked)
 end
 
 numbers = lines.shift.split(',').map(&:to_i)
@@ -61,9 +53,10 @@ end
 boards.pop if boards.last.empty?
 
 last_num = -1
+marked_nums = []
 numbers.each do |n|
 	boards.each { _1.mark n }
-	last_num = n
+	marked_nums << last_num = n
 	break if boards.any?(&:bingo?)
 end
 
