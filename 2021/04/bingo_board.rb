@@ -17,7 +17,7 @@ class BingoBoard
 	def size = rows.length
 
 	def mark(num)
-		row = rows.detect { |r| r.include? num }
+		row = rows.find { |r| r.include? num }
 		return unless row
 
 		row_idx = rows.index row
