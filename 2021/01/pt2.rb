@@ -6,6 +6,6 @@ abort('Please provide input file') if ARGV.count.zero?
 lines = []
 lines.concat ARGF.readlines(chomp: true).reject(&:empty?).map(&:to_i)
 
-puts lines.each_cons(3).each_cons(2).reduce(0) do |acc, (a, b)|
+puts(lines.each_cons(3).each_cons(2).reduce(0) do |acc, (a, b)|
 	(b.reduce(:+) - a.reduce(:+)).positive? ? acc + 1 : acc
-end
+end)

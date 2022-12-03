@@ -1,0 +1,28 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+<=>	pt1.rb	/^	def <=>(other) = @label <=> other.label$/;"	f	class:Node
+==	pt1.rb	/^	def ==(other)   = other&.label == @label$/;"	f	class:Node
+Graph	pt1.rb	/^class Graph$/;"	c
+Link	pt1.rb	/^Link = Struct.new(:a, :b) do$/;"	c
+Node	pt1.rb	/^class Node$/;"	c
+add_nodes	pt1.rb	/^	def add_nodes(nodea, nodeb)$/;"	f	class:Graph
+assign_nodes	pt1.rb	/^	def assign_nodes(nodea, nodeb)$/;"	f	class:Graph
+assign_start_or_end	pt1.rb	/^	def assign_start_or_end(node)$/;"	f	class:Graph
+big?	pt1.rb	/^	def big?   = label.match?(\/[[:upper:]]\/)$/;"	f	class:Node
+end	pt1.rb	/^	attr_reader :nodes, :links, :start, :end, :visited_paths, :valid_paths$/;"	f	class:Graph
+end?	pt1.rb	/^	def end?   = label == 'end'$/;"	f	class:Node
+eql?	pt1.rb	/^	alias eql? ==$/;"	a	class:Node
+find_paths	pt1.rb	/^	def find_paths$/;"	f	class:Graph
+follow_path	pt1.rb	/^	def follow_path(node, path)$/;"	f	class:Graph
+initialize	pt1.rb	/^	def initialize$/;"	f	class:Graph
+initialize	pt1.rb	/^	def initialize(label)$/;"	f	class:Node
+label	pt1.rb	/^	attr_reader :label$/;"	f	class:Node
+linked_nodes	pt1.rb	/^	attr_accessor :linked_nodes$/;"	f	class:Node
+linked_nodes=	pt1.rb	/^	attr_accessor :linked_nodes$/;"	f	class:Node
+links	pt1.rb	/^	attr_reader :nodes, :links, :start, :end, :visited_paths, :valid_paths$/;"	f	class:Graph
+nodes	pt1.rb	/^	attr_reader :nodes, :links, :start, :end, :visited_paths, :valid_paths$/;"	f	class:Graph
+other	pt1.rb	/^	def other(node)$/;"	f	class:Link
+start	pt1.rb	/^	attr_reader :nodes, :links, :start, :end, :visited_paths, :valid_paths$/;"	f	class:Graph
+start?	pt1.rb	/^	def start? = label == 'start'$/;"	f	class:Node
+valid_paths	pt1.rb	/^	attr_reader :nodes, :links, :start, :end, :visited_paths, :valid_paths$/;"	f	class:Graph
+visited_paths	pt1.rb	/^	attr_reader :nodes, :links, :start, :end, :visited_paths, :valid_paths$/;"	f	class:Graph
