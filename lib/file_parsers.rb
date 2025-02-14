@@ -30,18 +30,10 @@ module FileParsers
 			T.must(@lines_from_file)
 		end
 
-		# sig {
-		# 	params(block: T.nilable(T.proc.params(arg0: String).returns(BasicObject)))
-		# 		 .returns(T.any(StringsFromFile, T::Enumerator[String]))
-		# }
 		sig { params(block: T.nilable(T.proc.params(arg0: String).returns(BasicObject))).returns(T::Enumerable[String]) }
 		def lines(&block)
 			lines_from_file.each(&block)
 		end
-
-		# def chards(&block)
-		# 	lines.each_with_index.map {|line, x| line.chars}
-		# end
 
 		sig {
 			params(
@@ -97,6 +89,21 @@ module FileParsers
 						matches[regex] ||= []
 						T.must(matches[regex]) << m.captures
 					end
+				end
+			end
+
+			matches
+		end
+
+		ScanResults = T.type_alias { T::Array[T::Array[T.any(T::Array[String], String)]] }
+		sig { params(regexes: Regexp).returns(T::Hash[Regexp, ScanResults]) }
+		def regexes_scan(*regexes)
+			matches = T.let({}, T::Hash[Regexp, ScanResults])
+			lines.each do |line|
+				regexes.each do |regex|
+					m = line.scan regex
+					matches[regex] ||= []
+					T.must(matches[regex]) << m
 				end
 			end
 

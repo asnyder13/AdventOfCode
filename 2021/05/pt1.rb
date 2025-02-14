@@ -61,7 +61,7 @@ class Line
 	end
 end
 
-lines = ranges.map { Line.new(*_1) }.filter(&:straight)
+lines = ranges.map { Line.new(*_1) }.filter(&:straight?)
 
 sparse_grid = Hash.new { |h, k| h[k] = 0 }
 lines.map(&:coords).each do |coords|

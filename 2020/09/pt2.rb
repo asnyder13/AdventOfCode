@@ -35,7 +35,8 @@ parsed_lines.each_with_index do |l, i|
 		sum += parsed_lines[j]
 		if sum == invalid
 			min, max = parsed_lines[i..j].min, parsed_lines[i..j].max
-			puts "#{i}, #{j}, #{min}, #{max}, #{min + max}"
+			# puts "#{i}, #{j}, #{min}, #{max}, #{min + max}"
+			puts "#{min + max}"
 			exit
 		end
 	end

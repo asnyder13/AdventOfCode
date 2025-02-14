@@ -69,6 +69,7 @@ class Graph
 	end
 
 	def follow_path(node, path)
+		path = path.freeze
 		node.linked_nodes.each do |to_node_label, to_node|
 			new_path = "#{path},#{to_node_label}"
 
