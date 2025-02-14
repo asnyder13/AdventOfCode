@@ -3,7 +3,7 @@
 # typed: true
 
 require 'matrix'
-require_relative './priority_queue'
+require_relative '../../lib/priority_queue'
 
 lines = []
 input_file = ARGV.first || 'testinput.txt'
@@ -53,7 +53,7 @@ queue    = MinPriorityQueue.new
 distance[[0, 0]] = 0
 risk_map.each_with_index { |_risk, row, col| queue.push distance[[row, col]], [row, col] }
 
-until queue.length.zero?
+until queue.empty?
 	node = queue.pop
 
 	neighbours(node).each do |neigh|

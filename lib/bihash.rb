@@ -30,6 +30,8 @@ class BiHash
 
 		@forward[key]   = value
 		@forward[value] = key
+		@reverse[key]   = key
+		@reverse[value] = value
 		return
 	end
 

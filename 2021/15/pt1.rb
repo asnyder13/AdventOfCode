@@ -3,7 +3,7 @@
 # typed: true
 
 require 'matrix'
-require_relative './priority_queue'
+require_relative '../../lib/priority_queue'
 
 lines = []
 input_file = ARGV.first || 'testinput.txt'

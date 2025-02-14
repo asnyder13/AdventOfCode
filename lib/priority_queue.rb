@@ -47,6 +47,7 @@ class MinPriorityQueue
 
 	def include?(elem) = @set.include? elem
 	def length = @set.length
+	def empty? = @set.empty?
 
 		private
 

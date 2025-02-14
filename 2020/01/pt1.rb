@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 expenses = File.readlines('./input.txt').map(&:to_i)
 
 answer = -1
